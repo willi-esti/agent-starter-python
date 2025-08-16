@@ -1,0 +1,27 @@
+
+services:
+  livekit:
+    image: livekit/livekit-server:latest
+    command: --dev --node-ip livekit
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+      - "7882:7882/udp"
+    environment:
+      LIVEKIT_KEYS: "devkey: secret"
+
+  agent-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env.local
+    command: ["python", "-m", "src.agent", "dev"]
+    depends_on:
+      - livekit
