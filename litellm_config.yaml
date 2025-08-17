@@ -1,0 +1,20 @@
+model_list:
+  - model_name: gpt-3.5-turbo
+    litellm_params:
+      model: ollama/llama3.2:1b
+      api_base: http://ollama:11434
+  - model_name: gpt-4
+    litellm_params:
+      model: ollama/llama3.2:1b
+      api_base: http://ollama:11434
+  - model_name: gpt-4o-mini
+    litellm_params:
+      model: ollama/llama3.2:1b
+      api_base: http://ollama:11434
+
+general_settings:
+  master_key: sk-1234
+
+litellm_settings:
+  drop_params: true
+  set_verbose: false

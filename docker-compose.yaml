@@ -1,14 +1,50 @@
 
 services:
-  livekit:
-    image: livekit/livekit-server:latest
-    command: --dev --node-ip livekit
-    ports:
-      - "7880:7880"
-      - "7881:7881"
-      - "7882:7882/udp"
+  #livekit:
+  #  image: livekit/livekit-server:latest
+  #  command: --dev --node-ip livekit
+  #  ports:
+  #    - "7880:7880"
+  #    - "7881:7881"
+  #    - "7882:7882/udp"
+  #    - "50000-50100:50000-50100/udp" # media ports
+  #  environment:
+  #    LIVEKIT_KEYS: "devkey: secret"
+  #    LIVEKIT_NODE_IP: "192.168.255.14" 
+
+  postgres:
+    image: postgres:15-alpine
     environment:
-      LIVEKIT_KEYS: "devkey: secret"
+      POSTGRES_DB: litellm
+      POSTGRES_USER: litellm
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    ports:
+      - "4000:4000"
+    environment:
+      - LITELLM_MASTER_KEY=sk-1234
+      - DATABASE_URL=postgresql://litellm:password123@postgres:5432/litellm
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "1"]
+    depends_on:
+      - postgres
+      - ollama
 
   agent-app:
     build:
@@ -24,4 +60,11 @@ services:
       - .env.local
     command: ["python", "-m", "src.agent", "dev"]
     depends_on:
-      - livekit
+      - ollama
+      - litellm
+    #depends_on:
+    #  - livekit
+
+volumes:
+  ollama_data:
+  postgres_data:
