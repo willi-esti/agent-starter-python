@@ -163,9 +163,6 @@ class CoquiSynthesizeStream(tts.SynthesizeStream):
     
     async def _run(self, output_emitter):
         try:
-            # Mark audio started
-            output_emitter.mark_audio_started()
-            
             # Call Coqui TTS API
             response = requests.post(
                 f"{self.base_url}/api/tts",
@@ -189,9 +186,6 @@ class CoquiSynthesizeStream(tts.SynthesizeStream):
                 
         except Exception as e:
             logger.error(f"TTS error: {e}")
-        finally:
-            # Mark audio ended
-            output_emitter.mark_audio_ended()
 
 
 class Assistant(Agent):

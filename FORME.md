@@ -33,5 +33,20 @@ curl -X POST http://localhost:4000/v1/chat/completions \
 
 
 
+# For coqui-tts
 
+docker run --rm -it -p 5002:5002 --entrypoint /bin/bash ghcr.io/coqui-ai/tts-cpu
+
+python3 TTS/server/server.py --list_models
+python3 TTS/server/server.py --model_name "tts_models/en/ljspeech/tacotron2-DDC"
+
+
+curl -X POST \
+  http://localhost:5002/api/tts \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Hello, this is a test from Coqui TTS.",
+    "model_name": "tts_models/en/ljspeech/tacotron2-DDC"
+  }' \
+  --output my_audio.wav
 
