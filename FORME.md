@@ -41,6 +41,7 @@ python3 TTS/server/server.py --list_models
 python3 TTS/server/server.py --model_name "tts_models/en/ljspeech/tacotron2-DDC"
 
 
+# Old Coqui TTS - commented out
 curl -X POST \
   http://localhost:5002/api/tts \
   -H "Content-Type: application/json" \
@@ -50,3 +51,5 @@ curl -X POST \
   }' \
   --output my_audio.wav
 
+# New Coqui TTS
+curl -X POST "http://localhost:5000/synthesize" -H "Content-Type: application/json" -d '{"text": "Hello world!"}' --output my_audio.wav

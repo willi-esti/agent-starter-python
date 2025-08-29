@@ -1,0 +1,57 @@
+FROM python:3.9-slim
+
+# Install system dependencies for espeak TTS
+RUN apt-get update && \
+    apt-get install -y espeak espeak-data libespeak-dev ffmpeg && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install flask requests pydub
+
+WORKDIR /app
+
+# Create the TTS server
+COPY <<EOF /app/tts_server.py
+from flask import Flask, request, jsonify
+import subprocess
+import tempfile
+import os
+
+app = Flask(__name__)
+
+@app.route("/synthesize", methods=["POST"])
+def synthesize():
+    try:
+        data = request.get_json()
+        text = data.get("text", "")
+        
+        # Create temp file for audio
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_file:
+            # Use espeak to generate speech
+            subprocess.run([
+                "espeak", "-s", "150", "-w", temp_file.name, text
+            ], check=True)
+            
+            # Read the audio file
+            with open(temp_file.name, "rb") as f:
+                audio_data = f.read()
+            
+            # Clean up
+            os.unlink(temp_file.name)
+            
+            return audio_data, 200, {"Content-Type": "audio/wav"}
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
+EOF
+
+EXPOSE 5000
+
+CMD ["python", "tts_server.py"]

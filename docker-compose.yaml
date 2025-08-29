@@ -12,22 +12,28 @@ services:
   #    LIVEKIT_KEYS: "devkey: secret"
   #    LIVEKIT_NODE_IP: "192.168.255.14" 
 
+  # Old Coqui TTS - commented out
+  # coqui-tts:
+  #   container_name: coqui-tts
+  #   image: ghcr.io/coqui-ai/tts-cpu:latest
+  #   ports:
+  #     - "5002:5002"
+  #   environment:
+  #     - MODEL_NAME=tts_models/en/ljspeech/tacotron2-DDC
+  #   volumes:
+  #     - ./coqui-tts_models:/root/.local/share/tts
+  #   entrypoint: ["python3", "TTS/server/server.py"]
+  #   #command: ["--model_name", "tts_models/en/ljspeech/tacotron2-DDC"]
+  #   command: ["--model_name", "tts_models/en/ljspeech/glow-tts"]
+
+  # Simple TTS server using pyttsx3
   coqui-tts:
     container_name: coqui-tts
-    image: ghcr.io/coqui-ai/tts-cpu:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.tts
     ports:
-      - "5002:5002"
-    environment:
-      - MODEL_NAME=tts_models/en/ljspeech/tacotron2-DDC
-    volumes:
-      - ./coqui-tts_models:/root/.local/share/tts
-    entrypoint: ["python3", "TTS/server/server.py"]
-    command: ["--model_name", "tts_models/en/ljspeech/tacotron2-DDC"]
-    # --model_name "tts_models/en/vctk/vits"   --reference_wav  p226_001_mic1.flac --reference_speaker_idx "p226"  --speaker_idx "p225"
-    #command: ["--model_name", "tts_models/en/vctk/vits", "--reference_wav", "/root/.local/share/tts/tts_models/en/vctk/vits/p226_001_mic1.flac", "--reference_speaker_idx", "p226", "--speaker_idx", "p225"]
-    #command: ["--model_name", "tts_models/en/ljspeech/tacotron2-DDC"]
-    #command: ["--list_models"]
-   #command: ["python3", "TTS/server/server.py", "--model_name", "tts_models/en/ljspeech/tacotron2-DDC"]
+      - "5000:5000"
 
   postgres:
     image: postgres:15-alpine

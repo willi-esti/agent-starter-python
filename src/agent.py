@@ -138,18 +138,19 @@ class LocalWhisperSTT(stt.STT):
 
 
 class LocalCoquiTTS(tts.TTS):
-    def __init__(self, base_url="http://coqui-tts:5002"):
+    def __init__(self, base_url="http://coqui-tts:5000"):
         super().__init__(
             capabilities=tts.TTSCapabilities(
-                streaming=False,
+                streaming=True,  # Set streaming to True for this approach
             ),
             sample_rate=22050,
             num_channels=1,
         )
         self.base_url = base_url
     
+    # Re-implement the required abstract method
     def synthesize(self, text: str, *, conn_options=None, **kwargs) -> "tts.SynthesizeStream":
-        """Synthesize text to speech using Coqui TTS"""
+        """Synthesize text to speech using Coqui TTS and return a stream."""
         return CoquiSynthesizeStream(text, self.base_url, self.sample_rate, self.num_channels, tts=self, conn_options=conn_options)
 
 
@@ -163,23 +164,27 @@ class CoquiSynthesizeStream(tts.SynthesizeStream):
     
     async def _run(self, output_emitter):
         try:
-            # Call Coqui TTS API
             response = requests.post(
-                f"{self.base_url}/api/tts",
+                f"{self.base_url}/synthesize",
                 json={"text": self.text}
             )
             
             if response.status_code == 200:
-                # Get audio data
-                audio_data = response.content
+                # Get audio data as a byte stream
+                audio_bytes = response.content
                 
-                # Convert to AudioFrame
+                # Convert the byte stream to a NumPy array of 16-bit integers
+                audio_np = np.frombuffer(audio_bytes, dtype=np.int16)
+                
+                # Create the AudioFrame
                 frame = rtc.AudioFrame.create(
                     sample_rate=self.sample_rate,
                     num_channels=self.num_channels,
-                    samples_per_channel=len(audio_data) // 2,  # 16-bit samples
+                    samples_per_channel=len(audio_np)
                 )
-                frame.data[:len(audio_data)] = audio_data
+                
+                # Copy the NumPy array data into the AudioFrame
+                frame.data[:] = audio_np.tobytes()
                 await output_emitter(frame)
             else:
                 logger.error(f"TTS error: HTTP {response.status_code}")
