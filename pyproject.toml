@@ -13,6 +13,7 @@ dependencies = [
     "livekit-plugins-noise-cancellation~=0.2",
     "faster-whisper",
     "ollama",
+    "requests",
     "python-dotenv",
 ]
 

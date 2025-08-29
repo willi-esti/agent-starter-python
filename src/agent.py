@@ -2,6 +2,8 @@ import logging
 import asyncio
 import io
 import numpy as np
+import os
+import requests
 from typing import AsyncIterator
 
 from dotenv import load_dotenv
@@ -23,7 +25,7 @@ from livekit.agents import (
     metrics,
 )
 from livekit.agents.llm import function_tool, LLM
-from livekit.agents import stt
+from livekit.agents import stt, tts
 from livekit.plugins import cartesia, deepgram, noise_cancellation, openai, silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
@@ -48,18 +50,19 @@ class WhisperModelSingleton:
         return self._model
 
 
-class LocalOllamaLLM:
+class LocalOllamaLLM(LLM):
     def __init__(self, model="llama3.2:1b", base_url="http://ollama:11434"):
+        super().__init__()
         self.model = model
         self.base_url = base_url
         self.client = ollama.Client(host=base_url)
     
-    async def generate_response(self, messages):
+    async def _generate_impl(self, chat_ctx, function_ctx):
         """Generate response using local Ollama"""
         try:
-            # Convert messages to Ollama format
+            # Convert chat context to Ollama format
             prompt = ""
-            for msg in messages:
+            for msg in chat_ctx.messages:
                 if hasattr(msg, 'content'):
                     content = msg.content
                 elif isinstance(msg, dict):
@@ -70,10 +73,20 @@ class LocalOllamaLLM:
             
             # Call Ollama
             response = self.client.generate(model=self.model, prompt=prompt)
-            return response.get('response', '')
+            
+            # Return the response in the expected format
+            from livekit.agents.llm import ChatMessage
+            return ChatMessage.create(
+                text=response.get('response', ''),
+                role="assistant"
+            )
         except Exception as e:
             logger.error(f"LLM error: {e}")
-            return "I'm sorry, I'm having trouble processing that request."
+            from livekit.agents.llm import ChatMessage
+            return ChatMessage.create(
+                text="I'm sorry, I'm having trouble processing that request.",
+                role="assistant"
+            )
 
 
 class LocalWhisperSTT(stt.STT):
@@ -124,6 +137,63 @@ class LocalWhisperSTT(stt.STT):
             )
 
 
+class LocalCoquiTTS(tts.TTS):
+    def __init__(self, base_url="http://coqui-tts:5002"):
+        super().__init__(
+            capabilities=tts.TTSCapabilities(
+                streaming=False,
+            ),
+            sample_rate=22050,
+            num_channels=1,
+        )
+        self.base_url = base_url
+    
+    def synthesize(self, text: str, *, conn_options=None, **kwargs) -> "tts.SynthesizeStream":
+        """Synthesize text to speech using Coqui TTS"""
+        return CoquiSynthesizeStream(text, self.base_url, self.sample_rate, self.num_channels, tts=self, conn_options=conn_options)
+
+
+class CoquiSynthesizeStream(tts.SynthesizeStream):
+    def __init__(self, text: str, base_url: str, sample_rate: int, num_channels: int, *, tts, conn_options=None):
+        super().__init__(tts=tts, conn_options=conn_options)
+        self.text = text
+        self.base_url = base_url
+        self.sample_rate = sample_rate
+        self.num_channels = num_channels
+    
+    async def _run(self, output_emitter):
+        try:
+            # Mark audio started
+            output_emitter.mark_audio_started()
+            
+            # Call Coqui TTS API
+            response = requests.post(
+                f"{self.base_url}/api/tts",
+                json={"text": self.text}
+            )
+            
+            if response.status_code == 200:
+                # Get audio data
+                audio_data = response.content
+                
+                # Convert to AudioFrame
+                frame = rtc.AudioFrame.create(
+                    sample_rate=self.sample_rate,
+                    num_channels=self.num_channels,
+                    samples_per_channel=len(audio_data) // 2,  # 16-bit samples
+                )
+                frame.data[:len(audio_data)] = audio_data
+                await output_emitter(frame)
+            else:
+                logger.error(f"TTS error: HTTP {response.status_code}")
+                
+        except Exception as e:
+            logger.error(f"TTS error: {e}")
+        finally:
+            # Mark audio ended
+            output_emitter.mark_audio_ended()
+
+
 class Assistant(Agent):
     def __init__(self) -> None:
         super().__init__(
@@ -165,13 +235,17 @@ async def entrypoint(ctx: JobContext):
     session = AgentSession(
         # A Large Language Model (LLM) is your agent's brain, processing user input and generating a response
         # See all providers at https://docs.livekit.io/agents/integrations/llm/
-        llm=openai.LLM(model="gpt-4o-mini"),
+        llm=openai.LLM(
+            model="gpt-4o-mini",
+            api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=os.getenv("OPENAI_BASE_URL")
+        ),
         # Speech-to-text (STT) is your agent's ears, turning the user's speech into text that the LLM can understand
         # See all providers at https://docs.livekit.io/agents/integrations/stt/
         stt=LocalWhisperSTT(),
         # Text-to-speech (TTS) is your agent's voice, turning the LLM's text into speech that the user can hear
         # See all providers at https://docs.livekit.io/agents/integrations/tts/
-        tts=openai.TTS(),
+        tts=LocalCoquiTTS(),
         # VAD and turn detection are used to determine when the user is speaking and when the agent should respond
         # See more at https://docs.livekit.io/agents/build/turns
         turn_detection=MultilingualModel(),
