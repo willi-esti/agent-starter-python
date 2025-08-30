@@ -39,6 +39,13 @@ services:
     volumes:
       - ./coqui-tts:/app/coqui-tts  # Mount code for development
       - ./coqui-tts_models:/root/.local/share/tts  # Mount model cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   postgres:
     image: postgres:15-alpine
@@ -59,6 +66,13 @@ services:
       - ollama_data:/root/.ollama
     environment:
       - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   litellm:
     image: ghcr.io/berriai/litellm:main-latest
@@ -91,6 +105,13 @@ services:
       - ollama
       - litellm
       - coqui-tts
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     #depends_on:
     #  - livekit
 
