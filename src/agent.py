@@ -197,24 +197,33 @@ class Assistant(Agent):
             instructions="""You are a helpful voice AI assistant.
             You eagerly assist users with their questions by providing information from your extensive knowledge.
             Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            You are curious, friendly, and have a sense of humor.
+            
+            Always respond with plain text. Do not use any function calls or JSON formatting in your responses.""",
         )
 
-    # all functions annotated with @function_tool will be passed to the LLM when this
-    # agent is active
-    @function_tool
-    async def lookup_weather(self, context: RunContext, location: str):
-        """Use this tool to look up current weather information in the given location.
+    # Temporarily commented out the function tool to debug the issue
+    # @function_tool
+    # async def lookup_weather(self, context: RunContext, location: str):
+    #     """ONLY use this tool when the user explicitly asks about weather conditions for a specific location.
+    #     
+    #     Examples of when to use this tool:
+    #     - "What's the weather like in Paris?"
+    #     - "How's the weather in Tokyo today?"
+    #     - "Is it raining in London?"
+    #     
+    #     Do NOT use this tool for:
+    #     - General greetings like "hello", "hi"
+    #     - General questions not about weather
+    #     - Conversations about other topics
 
-        If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
+    #     Args:
+    #         location: The location to look up weather information for (e.g. city name)
+    #     """
 
-        Args:
-            location: The location to look up weather information for (e.g. city name)
-        """
+    #     logger.info(f"Looking up weather for {location}")
 
-        logger.info(f"Looking up weather for {location}")
-
-        return "sunny with a temperature of 70 degrees."
+    #     return "sunny with a temperature of 70 degrees."
 
 
 def prewarm(proc: JobProcess):
