@@ -141,51 +141,49 @@ class LocalCoquiTTS(tts.TTS):
     def __init__(self, base_url="http://coqui-tts:5000"):
         super().__init__(
             capabilities=tts.TTSCapabilities(
-                streaming=True,  # Set streaming to True for this approach
+                streaming=False,  # Non-streaming TTS
             ),
             sample_rate=22050,
             num_channels=1,
         )
         self.base_url = base_url
     
-    # Re-implement the required abstract method
-    def synthesize(self, text: str, *, conn_options=None, **kwargs) -> "tts.SynthesizeStream":
-        """Synthesize text to speech using Coqui TTS and return a stream."""
-        return CoquiSynthesizeStream(text, self.base_url, self.sample_rate, self.num_channels, tts=self, conn_options=conn_options)
+    def synthesize(self, text: str, *, conn_options=None, **kwargs) -> "tts.ChunkedStream":
+        """Synthesize text to speech using Coqui TTS"""
+        from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
+        conn_options = conn_options or DEFAULT_API_CONNECT_OPTIONS
+        return CoquiChunkedStream(tts=self, input_text=text, conn_options=conn_options, base_url=self.base_url)
 
 
-class CoquiSynthesizeStream(tts.SynthesizeStream):
-    def __init__(self, text: str, base_url: str, sample_rate: int, num_channels: int, *, tts, conn_options=None):
-        super().__init__(tts=tts, conn_options=conn_options)
-        self.text = text
+class CoquiChunkedStream(tts.ChunkedStream):
+    def __init__(self, *, tts: LocalCoquiTTS, input_text: str, conn_options, base_url: str):
+        super().__init__(tts=tts, input_text=input_text, conn_options=conn_options)
+        self._tts = tts
         self.base_url = base_url
-        self.sample_rate = sample_rate
-        self.num_channels = num_channels
     
-    async def _run(self, output_emitter):
+    async def _run(self, output_emitter: tts.AudioEmitter) -> None:
         try:
+            # Call Coqui TTS API
             response = requests.post(
                 f"{self.base_url}/synthesize",
-                json={"text": self.text}
+                json={"text": self.input_text}
             )
             
             if response.status_code == 200:
-                # Get audio data as a byte stream
-                audio_bytes = response.content
-                
-                # Convert the byte stream to a NumPy array of 16-bit integers
-                audio_np = np.frombuffer(audio_bytes, dtype=np.int16)
-                
-                # Create the AudioFrame
-                frame = rtc.AudioFrame.create(
-                    sample_rate=self.sample_rate,
-                    num_channels=self.num_channels,
-                    samples_per_channel=len(audio_np)
+                # Initialize the output emitter (this is the missing step!)
+                output_emitter.initialize(
+                    request_id="coqui-tts",
+                    sample_rate=self._tts.sample_rate,
+                    num_channels=self._tts.num_channels,
+                    mime_type="audio/wav"
                 )
                 
-                # Copy the NumPy array data into the AudioFrame
-                frame.data[:] = audio_np.tobytes()
-                await output_emitter(frame)
+                # Get audio data and push it
+                audio_data = response.content
+                output_emitter.push(audio_data)
+                
+                # Flush to complete the stream
+                output_emitter.flush()
             else:
                 logger.error(f"TTS error: HTTP {response.status_code}")
                 
