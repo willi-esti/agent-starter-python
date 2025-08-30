@@ -1,0 +1,6 @@
+flask
+requests
+pydub
+TTS==0.13.3
+torch
+torchaudio

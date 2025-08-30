@@ -26,7 +26,7 @@ services:
   #   #command: ["--model_name", "tts_models/en/ljspeech/tacotron2-DDC"]
   #   command: ["--model_name", "tts_models/en/ljspeech/glow-tts"]
 
-  # Simple TTS server using pyttsx3
+  # Coqui TTS server with neural models
   coqui-tts:
     container_name: coqui-tts
     build:
@@ -34,6 +34,11 @@ services:
       dockerfile: Dockerfile.tts
     ports:
       - "5000:5000"
+    environment:
+      - TTS_MODEL=tts_models/en/ljspeech/tacotron2-DDC  # Can be changed to other models
+    volumes:
+      - ./coqui-tts:/app/coqui-tts  # Mount code for development
+      - ./coqui-tts_models:/root/.local/share/tts  # Mount model cache
 
   postgres:
     image: postgres:15-alpine
