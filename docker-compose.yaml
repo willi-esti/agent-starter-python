@@ -48,6 +48,7 @@ services:
               capabilities: [gpu]
 
   postgres:
+    container_name: postgres
     image: postgres:15-alpine
     environment:
       POSTGRES_DB: litellm
@@ -59,6 +60,7 @@ services:
       - "5432:5432"
 
   ollama:
+    container_name: ollama
     image: ollama/ollama:latest
     ports:
       - "11434:11434"
@@ -75,6 +77,7 @@ services:
               capabilities: [gpu]
 
   litellm:
+    container_name: litellm
     image: ghcr.io/berriai/litellm:main-latest
     ports:
       - "4000:4000"
@@ -89,11 +92,13 @@ services:
       - ollama
 
   agent-app:
+    container_name: agent-app
     build:
       context: .
       dockerfile: Dockerfile.dev
     volumes:
       - ./src:/app/src
+      - ./agent-models:/root/.cache/huggingface/hub/
     ports:
       - "8000:8000"
     environment:
@@ -107,7 +112,10 @@ services:
       - coqui-tts
     deploy:
       resources:
+        limits:
+          memory: 3G  # Increase memory limit for larger models
         reservations:
+          memory: 1G
           devices:
             - driver: nvidia
               count: all

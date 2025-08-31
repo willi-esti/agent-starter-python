@@ -1,6 +1,7 @@
 """Factory for creating plugin instances with configuration."""
 
 import os
+import asyncio
 from typing import Optional
 
 from .whisper_stt import LocalWhisperSTT
@@ -12,9 +13,20 @@ class PluginFactory:
     """Factory class for creating configured plugin instances."""
     
     @staticmethod
-    def create_whisper_stt(model_size: str = "base") -> LocalWhisperSTT:
+    def create_whisper_stt(model_size: Optional[str] = None) -> LocalWhisperSTT:
         """Create a configured Whisper STT instance."""
+        if model_size is None:
+            model_size = os.getenv("WHISPER_MODEL", "small")
         return LocalWhisperSTT(model_size=model_size)
+    
+    @staticmethod
+    async def prewarm_whisper_stt(model_size: Optional[str] = None) -> LocalWhisperSTT:
+        """Create and prewarm a Whisper STT instance."""
+        if model_size is None:
+            model_size = os.getenv("WHISPER_MODEL", "small")
+        stt_instance = LocalWhisperSTT(model_size=model_size)
+        await stt_instance._ensure_model_loaded()
+        return stt_instance
     
     @staticmethod
     def create_ollama_llm(
