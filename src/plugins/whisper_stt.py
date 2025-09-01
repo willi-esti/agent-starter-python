@@ -3,6 +3,7 @@
 import logging
 import numpy as np
 import asyncio
+import os
 from typing import AsyncIterator
 
 from faster_whisper import WhisperModel
@@ -28,13 +29,31 @@ class WhisperModelSingleton:
             self._loading = True
             try:
                 logger.info(f"Loading Whisper model: {model_size}")
+                
+                # Get device and compute type from environment
+                device = os.getenv("WHISPER_DEVICE", "cuda")
+                compute_type = os.getenv("WHISPER_COMPUTE_TYPE", "float16")
+                
+                logger.info(f"Using device: {device}, compute_type: {compute_type}")
+                
                 # Load model in executor to avoid blocking
                 loop = asyncio.get_event_loop()
-                self._model = await loop.run_in_executor(
-                    None, 
-                    lambda: WhisperModel(model_size, device="cpu", compute_type="int8")
-                )
-                logger.info(f"Whisper model {model_size} loaded successfully")
+                
+                try:
+                    # Try GPU first
+                    self._model = await loop.run_in_executor(
+                        None,
+                        lambda: WhisperModel(model_size, device=device, compute_type=compute_type)
+                    )
+                    logger.info(f"Whisper model {model_size} loaded successfully on {device}")
+                except Exception as gpu_error:
+                    # Fall back to CPU if GPU fails
+                    logger.warning(f"GPU loading failed: {gpu_error}, falling back to CPU")
+                    self._model = await loop.run_in_executor(
+                        None, 
+                        lambda: WhisperModel(model_size, device="cpu", compute_type="int8")
+                    )
+                    logger.info(f"Whisper model {model_size} loaded successfully on CPU")
             finally:
                 self._loading = False
         elif self._loading:

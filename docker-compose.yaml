@@ -105,7 +105,7 @@ services:
       - PYTHONUNBUFFERED=1
     env_file:
       - .env.local
-    command: ["python", "-m", "src.agent", "dev"]
+    command: ["python3", "-m", "src.agent", "dev"]
     depends_on:
       - ollama
       - litellm
