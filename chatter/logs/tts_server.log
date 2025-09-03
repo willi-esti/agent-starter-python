@@ -1,0 +1,755 @@
+2025-09-02 13:21:47 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-02 13:21:47 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-02 13:21:47 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-02 13:21:47 [INFO] server: TTS Server: Initializing application...
+2025-09-02 13:21:47 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-02 13:21:47 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-02 13:21:47 [INFO] engine: Final device selection: cuda
+2025-09-02 13:21:47 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-02 13:44:19 [ERROR] engine: Failed to load model using from_pretrained (expected from 'ResembleAI/chatterbox' or library default): An error occurred while downloading using `hf_transfer`. Consider disabling HF_HUB_ENABLE_HF_TRANSFER for better error handling.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 470, in http_get
+    hf_transfer.download(
+Exception: Failed too many failures in parallel (3): Request: error sending request for url (https://cdn-lfs-us-1.hf.co/repos/fb/0a/fb0a05bb65ed332ddd0d443800d9ca4ac88494b6b6ca7d9fa63cfef5b66fa83b/2b78103c654207393955e4900aac14a12de8ef25f4b09424f1ef91941f161d4e?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27s3gen.safetensors%3B+filename%3D%22s3gen.safetensors%22%3B&Expires=1756822064&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc1NjgyMjA2NH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zL2ZiLzBhL2ZiMGEwNWJiNjVlZDMzMmRkZDBkNDQzODAwZDljYTRhYzg4NDk0YjZiNmNhN2Q5ZmE2M2NmZWY1YjY2ZmE4M2IvMmI3ODEwM2M2NTQyMDczOTM5NTVlNDkwMGFhYzE0YTEyZGU4ZWYyNWY0YjA5NDI0ZjFlZjkxOTQxZjE2MWQ0ZT9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSoifV19&Signature=IY7AmW1cay9Hi2HivhN7AMWXwkkVht1CFl26ZhutxhkLtF-latBD-klYNuPKclNL40IRdeMPAPytetS2K%7EiJrK4tZ4Bg6ST0OHcc88dkbAauX0xJoHSRqaIeK0m2RdPgjEvYvnr07yp4HOEFUp4AG44fAe974Jj-CbDa-AGSnQnvM8exJpdSh94IZmEuy1Rzw-eKgymT9iGpwtpCpFEEEcAfU3LtrLq1DxW2YIx1bKlcmQe%7E1vla5S1rt1e9PSsqMpiswfwirAXfSw8aTJVOG2OqVM1HMTXrilineKOVL2DZovMvpkNejb3nXdzdimKC94--uFrO8edJ-mQwUuDAAA__&Key-Pair-Id=K24J24Z295AEI9) (no permits available)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/engine.py", line 172, in load_model
+    chatterbox_model = ChatterboxTTS.from_pretrained(device=model_device)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 178, in from_pretrained
+    local_path = hf_hub_download(repo_id=REPO_ID, filename=fpath)
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 1010, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 1171, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 1738, in _download_to_tmp_and_move
+    http_get(
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 481, in http_get
+    raise RuntimeError(
+RuntimeError: An error occurred while downloading using `hf_transfer`. Consider disabling HF_HUB_ENABLE_HF_TRANSFER for better error handling.
+2025-09-02 13:44:19 [CRITICAL] server: CRITICAL: TTS Model failed to load on startup. Server might not function correctly.
+2025-09-02 13:44:19 [INFO] server: Application startup sequence complete.
+2025-09-02 13:45:46 [INFO] server: Request received for /api/ui/initial-data.
+2025-09-02 13:45:46 [INFO] utils: Found 28 predefined voices in /app/voices
+2025-09-02 13:45:55 [INFO] server: Request received for /api/ui/initial-data.
+2025-09-02 13:45:55 [INFO] utils: Found 28 predefined voices in /app/voices
+2025-09-02 13:47:51 [ERROR] server: TTS request failed: Model not loaded.
+2025-09-02 13:59:36 [INFO] server: TTS Server: Application shutdown sequence initiated...
+2025-09-02 13:59:36 [INFO] server: TTS Server: Application shutdown complete.
+2025-09-02 14:00:01 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-02 14:00:01 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-02 14:00:01 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-02 14:00:01 [INFO] server: TTS Server: Initializing application...
+2025-09-02 14:00:01 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-02 14:00:01 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-02 14:00:01 [INFO] engine: Final device selection: cuda
+2025-09-02 14:00:01 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-02 14:06:48 [INFO] root: input frame rate=25
+2025-09-02 14:06:50 [INFO] engine: Successfully loaded TTS model using from_pretrained on cuda (expected from 'ResembleAI/chatterbox' or library default).
+2025-09-02 14:06:50 [INFO] engine: TTS Model loaded successfully on cuda. Engine sample rate: 24000 Hz.
+2025-09-02 14:06:50 [INFO] server: TTS Model loaded successfully via engine.
+2025-09-02 14:06:50 [INFO] server: Application startup sequence complete.
+2025-09-02 14:06:51 [INFO] server: Attempting to open web browser to: http://localhost:8004/
+2025-09-02 14:09:11 [INFO] server: Request received for main UI page ('/').
+2025-09-02 14:09:12 [INFO] server: Request received for /api/ui/initial-data.
+2025-09-02 14:09:12 [INFO] utils: Found 28 predefined voices in /app/voices
+2025-09-03 02:41:29 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:41:29 [INFO] server: Using predefined voice: Emily.wav
+2025-09-03 02:41:29 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:41:29 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:41:29 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:41:29 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:41:33 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:41:37 [INFO] utils: Encoded 700844 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 02:41:37 [INFO] server: Successfully generated audio: tts_output_20250903_024137.wav, 700844 bytes, type audio/wav.
+2025-09-03 02:41:37 [INFO] server: Request received for /save_settings.
+2025-09-03 02:41:37 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:41:37 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:41:37 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:41:37 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:42:39 [INFO] server: Request received for /save_settings.
+2025-09-03 02:42:39 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:42:39 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:42:39 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:42:39 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:42:42 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:42:42 [INFO] server: Using predefined voice: Emily.wav
+2025-09-03 02:42:42 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:42:42 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:42:42 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:42:42 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:42:43 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:42:47 [INFO] utils: Encoded 846764 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 02:42:47 [INFO] server: Successfully generated audio: tts_output_20250903_024247.wav, 846764 bytes, type audio/wav.
+2025-09-03 02:42:47 [INFO] server: Request received for /save_settings.
+2025-09-03 02:42:47 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:42:47 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:42:47 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:42:47 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:43:31 [INFO] server: Request received for /save_settings.
+2025-09-03 02:43:31 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:43:31 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:43:31 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:43:31 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:43:40 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:43:40 [INFO] server: Using predefined voice: Layla.wav
+2025-09-03 02:43:40 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:43:40 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:43:40 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:43:40 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:43:40 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:43:44 [INFO] utils: Encoded 882284 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 02:43:44 [INFO] server: Successfully generated audio: tts_output_20250903_024344.wav, 882284 bytes, type audio/wav.
+2025-09-03 02:43:44 [INFO] server: Request received for /save_settings.
+2025-09-03 02:43:44 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:43:44 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:43:44 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:43:44 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:07 [INFO] server: Request received for /save_settings.
+2025-09-03 02:44:07 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:44:07 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:44:07 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:44:07 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:11 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:44:11 [INFO] server: Using predefined voice: Abigail.wav
+2025-09-03 02:44:11 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:44:11 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:44:11 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:44:11 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:44:11 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:44:15 [INFO] utils: Encoded 700844 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:44:15 [INFO] server: Successfully generated audio: tts_output_20250903_024415.wav, 700844 bytes, type audio/wav.
+2025-09-03 02:44:15 [INFO] server: Request received for /save_settings.
+2025-09-03 02:44:15 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:44:15 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:44:15 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:44:15 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:32 [INFO] server: Request received for /save_settings.
+2025-09-03 02:44:32 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:44:32 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:44:32 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:44:32 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:35 [INFO] server: Request received for /save_settings.
+2025-09-03 02:44:35 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:44:35 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:44:35 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:44:35 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:40 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:44:40 [INFO] server: Using predefined voice: Adrian.wav
+2025-09-03 02:44:40 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:44:40 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:44:40 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:44:40 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:44:40 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:44:44 [INFO] utils: Encoded 724844 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:44:44 [INFO] server: Successfully generated audio: tts_output_20250903_024444.wav, 724844 bytes, type audio/wav.
+2025-09-03 02:44:44 [INFO] server: Request received for /save_settings.
+2025-09-03 02:44:44 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:44:44 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:44:44 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:44:44 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:54 [INFO] server: Request received for /save_settings.
+2025-09-03 02:44:54 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:44:54 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:44:54 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:44:54 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:44:55 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:44:55 [INFO] server: Using predefined voice: Alexander.wav
+2025-09-03 02:44:55 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:44:55 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:44:55 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:44:55 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:44:55 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:45:00 [INFO] utils: Encoded 859244 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 02:45:00 [INFO] server: Successfully generated audio: tts_output_20250903_024500.wav, 859244 bytes, type audio/wav.
+2025-09-03 02:45:08 [INFO] server: Request received for /save_settings.
+2025-09-03 02:45:08 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:45:08 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:45:08 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:45:08 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:45:09 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:45:09 [INFO] server: Using predefined voice: Alice.wav
+2025-09-03 02:45:09 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:45:09 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:45:09 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:45:09 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:45:13 [INFO] utils: Encoded 844844 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 02:45:13 [INFO] server: Successfully generated audio: tts_output_20250903_024513.wav, 844844 bytes, type audio/wav.
+2025-09-03 02:45:28 [INFO] server: Request received for /save_settings.
+2025-09-03 02:45:28 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:45:28 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:45:28 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:45:28 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:45:28 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:45:28 [INFO] server: Using predefined voice: Austin.wav
+2025-09-03 02:45:28 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:45:28 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:45:28 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:45:28 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:45:28 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:45:33 [INFO] utils: Encoded 722924 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:45:33 [INFO] server: Successfully generated audio: tts_output_20250903_024533.wav, 722924 bytes, type audio/wav.
+2025-09-03 02:45:42 [INFO] server: Request received for /save_settings.
+2025-09-03 02:45:42 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:45:42 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:45:42 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:45:42 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:45:42 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:45:42 [INFO] server: Using predefined voice: Axel.wav
+2025-09-03 02:45:42 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:45:42 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:45:42 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:45:42 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:45:42 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:45:47 [INFO] utils: Encoded 812204 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 02:45:47 [INFO] server: Successfully generated audio: tts_output_20250903_024547.wav, 812204 bytes, type audio/wav.
+2025-09-03 02:45:55 [INFO] server: Request received for /save_settings.
+2025-09-03 02:45:55 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:45:55 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:45:55 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:45:55 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:45:55 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:45:55 [INFO] server: Using predefined voice: Connor.wav
+2025-09-03 02:45:55 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:45:55 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:45:55 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:45:55 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:45:55 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:46:00 [INFO] utils: Encoded 775724 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:46:00 [INFO] server: Successfully generated audio: tts_output_20250903_024600.wav, 775724 bytes, type audio/wav.
+2025-09-03 02:46:12 [INFO] server: Request received for /save_settings.
+2025-09-03 02:46:12 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:46:12 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:46:12 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:46:12 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:46:13 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:46:13 [INFO] server: Using predefined voice: Cora.wav
+2025-09-03 02:46:13 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:46:13 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:46:13 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:46:13 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:46:13 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:46:18 [INFO] utils: Encoded 777644 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:46:18 [INFO] server: Successfully generated audio: tts_output_20250903_024618.wav, 777644 bytes, type audio/wav.
+2025-09-03 02:46:31 [INFO] server: Request received for /save_settings.
+2025-09-03 02:46:31 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:46:31 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:46:31 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:46:31 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:46:32 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 02:46:32 [INFO] server: Using predefined voice: Henry.wav
+2025-09-03 02:46:32 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 02:46:32 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 02:46:32 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 02:46:32 [INFO] engine: Global seed set to: 3000
+2025-09-03 02:46:36 [INFO] utils: Encoded 745004 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:46:36 [INFO] server: Successfully generated audio: tts_output_20250903_024636.wav, 745004 bytes, type audio/wav.
+2025-09-03 02:47:40 [INFO] server: Request received for /save_settings.
+2025-09-03 02:47:40 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:47:40 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:47:40 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:47:40 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:47:49 [INFO] server: Request received for /save_settings.
+2025-09-03 02:47:49 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 02:47:49 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 02:47:49 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 02:47:49 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 02:48:47 [INFO] server: Request received for main UI page ('/').
+2025-09-03 02:48:47 [INFO] server: Request received for /api/ui/initial-data.
+2025-09-03 02:48:47 [INFO] utils: Found 28 predefined voices in /app/voices
+2025-09-03 02:50:05 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 02:50:05 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:50:06 [INFO] utils: Encoded 83564 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:50:12 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 02:50:12 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:50:13 [INFO] utils: Encoded 74924 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:50:41 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 02:50:41 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 02:50:42 [INFO] utils: Encoded 80684 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 02:59:35 [INFO] server: TTS Server: Application shutdown sequence initiated...
+2025-09-03 02:59:35 [INFO] server: TTS Server: Application shutdown complete.
+2025-09-03 02:59:51 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 02:59:51 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 02:59:51 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 02:59:51 [INFO] server: TTS Server: Initializing application...
+2025-09-03 02:59:51 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 02:59:51 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 02:59:51 [INFO] engine: Final device selection: cuda
+2025-09-03 02:59:51 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 03:04:09 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 03:04:09 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 03:04:09 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 03:04:09 [INFO] server: TTS Server: Initializing application...
+2025-09-03 03:04:09 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 03:04:09 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 03:04:09 [INFO] engine: Final device selection: cuda
+2025-09-03 03:04:09 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 03:05:41 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 03:05:41 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 03:05:41 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 03:05:41 [INFO] server: TTS Server: Initializing application...
+2025-09-03 03:05:41 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 03:05:41 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 03:05:41 [INFO] engine: Final device selection: cuda
+2025-09-03 03:05:41 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 03:06:29 [ERROR] engine: Failed to load model using from_pretrained (expected from 'ResembleAI/chatterbox' or library default): An error occurred while downloading using `hf_transfer`. Consider disabling HF_HUB_ENABLE_HF_TRANSFER for better error handling.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 470, in http_get
+    hf_transfer.download(
+Exception: Error while downloading: error sending request for url (https://cdn-lfs-us-1.hf.co/repos/fb/0a/fb0a05bb65ed332ddd0d443800d9ca4ac88494b6b6ca7d9fa63cfef5b66fa83b/914cb1696f47527fe8852ca8f1fe1fa63cb34f76f9c715e84e067b744dd0da81?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27t3_cfg.safetensors%3B+filename%3D%22t3_cfg.safetensors%22%3B&Expires=1756871390&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc1Njg3MTM5MH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zL2ZiLzBhL2ZiMGEwNWJiNjVlZDMzMmRkZDBkNDQzODAwZDljYTRhYzg4NDk0YjZiNmNhN2Q5ZmE2M2NmZWY1YjY2ZmE4M2IvOTE0Y2IxNjk2ZjQ3NTI3ZmU4ODUyY2E4ZjFmZTFmYTYzY2IzNGY3NmY5YzcxNWU4NGUwNjdiNzQ0ZGQwZGE4MT9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSoifV19&Signature=FzP9xTQsYtKBr2us-7s0A8NZDgGyz-9g2ulrfL4x92AE8BmU-qOtZR8OJqF4ZjIvfhuE%7EthlkfVc1R62d1kL0OtQUahDdEQB3%7EdCSbXOEMrjsfP70P05PvRWcdOI85-MUhWBL%7EF4d%7EHcOZzDYuuMpP2uuPJx2OUt3%7EZFdxwV1lDF61IUhGna2SkuO5oXgPkL6opohC8zGlLVjh6dQcP0Yxm7vGQkjcn14sTFb0brzo7Ew4PUmTXFRttxc8LzTZL8WzRPFWTFBQghPsIJQMuMc60r49y3ZjXqSUVMXc6gCi4ljN9p-gtbOJAYrSAQ6Bh2tmH2qx5-UBZLIe8PymnV1A__&Key-Pair-Id=K24J24Z295AEI9)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/engine.py", line 172, in load_model
+    chatterbox_model = ChatterboxTTS.from_pretrained(device=model_device)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 178, in from_pretrained
+    local_path = hf_hub_download(repo_id=REPO_ID, filename=fpath)
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 1010, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 1171, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 1738, in _download_to_tmp_and_move
+    http_get(
+  File "/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py", line 481, in http_get
+    raise RuntimeError(
+RuntimeError: An error occurred while downloading using `hf_transfer`. Consider disabling HF_HUB_ENABLE_HF_TRANSFER for better error handling.
+2025-09-03 03:06:29 [CRITICAL] server: CRITICAL: TTS Model failed to load on startup. Server might not function correctly.
+2025-09-03 03:06:29 [INFO] server: Application startup sequence complete.
+2025-09-03 06:38:41 [INFO] server: Request received for main UI page ('/').
+2025-09-03 06:38:42 [INFO] server: Request received for /api/ui/initial-data.
+2025-09-03 06:38:42 [INFO] utils: Found 28 predefined voices in /app/voices
+2025-09-03 06:38:44 [ERROR] server: TTS request failed: Model not loaded.
+2025-09-03 06:38:51 [ERROR] server: TTS request failed: Model not loaded.
+2025-09-03 06:39:19 [INFO] server: TTS Server: Application shutdown sequence initiated...
+2025-09-03 06:39:19 [INFO] server: TTS Server: Application shutdown complete.
+2025-09-03 06:39:21 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 06:39:21 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 06:39:21 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 06:39:21 [INFO] server: TTS Server: Initializing application...
+2025-09-03 06:39:21 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 06:39:22 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 06:39:22 [INFO] engine: Final device selection: cuda
+2025-09-03 06:39:22 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 06:42:01 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 06:42:01 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 06:42:01 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 06:42:01 [INFO] server: TTS Server: Initializing application...
+2025-09-03 06:42:01 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 06:42:01 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 06:42:01 [INFO] engine: Final device selection: cuda
+2025-09-03 06:42:01 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 11:19:04 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 11:19:04 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 11:19:04 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 11:19:04 [INFO] server: TTS Server: Initializing application...
+2025-09-03 11:19:04 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 11:19:04 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 11:19:04 [INFO] engine: Final device selection: cuda
+2025-09-03 11:19:04 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 11:38:23 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 11:38:23 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 11:38:23 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 11:38:23 [INFO] server: TTS Server: Initializing application...
+2025-09-03 11:38:23 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 11:38:23 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 11:38:23 [INFO] engine: Final device selection: cuda
+2025-09-03 11:38:23 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 11:41:24 [INFO] root: input frame rate=25
+2025-09-03 11:41:25 [INFO] engine: Successfully loaded TTS model using from_pretrained on cuda (expected from 'ResembleAI/chatterbox' or library default).
+2025-09-03 11:41:25 [INFO] engine: TTS Model loaded successfully on cuda. Engine sample rate: 24000 Hz.
+2025-09-03 11:41:25 [INFO] server: TTS Model loaded successfully via engine.
+2025-09-03 11:41:25 [INFO] server: Application startup sequence complete.
+2025-09-03 11:41:27 [INFO] server: Attempting to open web browser to: http://localhost:8004/
+2025-09-03 11:45:00 [INFO] server: TTS Server: Application shutdown sequence initiated...
+2025-09-03 11:45:00 [INFO] server: TTS Server: Application shutdown complete.
+2025-09-03 11:45:15 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 11:45:15 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 11:45:15 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 11:45:15 [INFO] server: TTS Server: Initializing application...
+2025-09-03 11:45:15 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 11:45:15 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 11:45:15 [INFO] engine: Final device selection: cuda
+2025-09-03 11:45:15 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 11:45:22 [INFO] root: input frame rate=25
+2025-09-03 11:45:23 [INFO] engine: Successfully loaded TTS model using from_pretrained on cuda (expected from 'ResembleAI/chatterbox' or library default).
+2025-09-03 11:45:23 [INFO] engine: TTS Model loaded successfully on cuda. Engine sample rate: 24000 Hz.
+2025-09-03 11:45:23 [INFO] server: TTS Model loaded successfully via engine.
+2025-09-03 11:45:23 [INFO] server: Application startup sequence complete.
+2025-09-03 11:45:25 [INFO] server: Attempting to open web browser to: http://localhost:8004/
+2025-09-03 11:51:18 [INFO] server: Request received for main UI page ('/').
+2025-09-03 11:51:18 [INFO] server: Request received for main UI page ('/').
+2025-09-03 11:51:19 [INFO] server: Request received for /api/ui/initial-data.
+2025-09-03 11:51:19 [INFO] utils: Found 28 predefined voices in /app/voices
+2025-09-03 11:51:53 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:51:58 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:51:59 [INFO] utils: Encoded 63404 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:52:00 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:52:00 [INFO] server: Using predefined voice: Henry.wav
+2025-09-03 11:52:00 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 11:52:00 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 11:52:00 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 11:52:00 [INFO] engine: Global seed set to: 3000
+2025-09-03 11:52:04 [INFO] utils: Encoded 641324 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:52:04 [INFO] server: Successfully generated audio: tts_output_20250903_115204.wav, 641324 bytes, type audio/wav.
+2025-09-03 11:55:53 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:55:53 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:55:54 [INFO] utils: Encoded 111404 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:55:54 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:55:54 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:55:55 [INFO] utils: Encoded 82604 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:55:55 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:55:55 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:55:57 [INFO] utils: Encoded 232364 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:55:57 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:55:57 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:55:59 [INFO] utils: Encoded 295724 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:57:00 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:57:00 [ERROR] server: Predefined voice file not found: /app/voices/string
+2025-09-03 11:58:01 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:58:01 [ERROR] server: Predefined voice file not found: /app/voices/string
+2025-09-03 11:58:09 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:58:09 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:58:11 [INFO] utils: Encoded 138284 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:58:11 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:58:11 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:58:12 [INFO] utils: Encoded 186284 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:58:12 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:58:12 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:58:13 [INFO] utils: Encoded 111404 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 11:58:15 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:58:15 [ERROR] server: Predefined voice file not found: /app/voices/string
+2025-09-03 11:58:27 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:58:38 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:58:38 [INFO] server: Using predefined voice: Connor.wav
+2025-09-03 11:58:38 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 11:58:38 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 11:58:38 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:58:38 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 11:58:38 [ERROR] engine: Error during TTS synthesis: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/app/engine.py", line 256, in synthesize
+    wav_tensor = chatterbox_model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 243, in generate
+    speech_tokens = self.t3.inference(
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/models/t3/t3.py", line 357, in inference
+    if next_token.view(-1) == self.hp.stop_speech_token:
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2025-09-03 11:58:38 [ERROR] server: TTS engine failed to synthesize audio for chunk 1.
+2025-09-03 11:59:11 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 11:59:11 [INFO] server: Using predefined voice: Connor.wav
+2025-09-03 11:59:11 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 11:59:11 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 11:59:11 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 11:59:11 [ERROR] engine: Error during TTS synthesis: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/app/engine.py", line 256, in synthesize
+    wav_tensor = chatterbox_model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 217, in generate
+    self.prepare_conditionals(audio_prompt_path, exaggeration=exaggeration)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 189, in prepare_conditionals
+    s3gen_ref_dict = self.s3gen.embed_ref(s3gen_ref_wav, S3GEN_SR, device=self.device)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/models/s3gen/s3gen.py", line 126, in embed_ref
+    ref_wav = ref_wav.to(device)
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2025-09-03 11:59:11 [ERROR] server: TTS engine failed to synthesize audio for chunk 1.
+2025-09-03 12:00:06 [INFO] server: Request received for /save_settings.
+2025-09-03 12:00:06 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 12:00:06 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 12:00:06 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 12:00:06 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 12:00:08 [INFO] server: Request received for /save_settings.
+2025-09-03 12:00:08 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 12:00:08 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 12:00:08 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 12:00:08 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 12:00:09 [INFO] server: Request received for /save_settings.
+2025-09-03 12:00:09 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 12:00:09 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 12:00:09 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 12:00:09 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 12:00:10 [INFO] server: Request received for /save_settings.
+2025-09-03 12:00:10 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 12:00:10 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 12:00:10 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 12:00:10 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 12:00:11 [INFO] server: Request received for /save_settings.
+2025-09-03 12:00:11 [INFO] config: TTS processing device resolved to: cuda
+2025-09-03 12:00:11 [WARNING] config: Could not create backup of config.yaml: [Errno 16] Device or resource busy: 'config.yaml'
+2025-09-03 12:00:11 [INFO] config: Configuration successfully saved to config.yaml
+2025-09-03 12:00:11 [INFO] config: Configuration updated, saved, and re-resolved successfully.
+2025-09-03 12:00:13 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 12:00:13 [INFO] server: Using predefined voice: Henry.wav
+2025-09-03 12:00:13 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 12:00:13 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 12:00:13 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 12:00:13 [ERROR] engine: Error during TTS synthesis: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/app/engine.py", line 244, in synthesize
+    set_seed(seed)
+  File "/app/engine.py", line 34, in set_seed
+    torch.manual_seed(seed_value)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_compile.py", line 32, in inner
+    return disable_fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_dynamo/eval_frame.py", line 632, in _fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/random.py", line 46, in manual_seed
+    torch.cuda.manual_seed_all(seed)
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/random.py", line 129, in manual_seed_all
+    _lazy_call(cb, seed_all=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/__init__.py", line 249, in _lazy_call
+    callable()
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/random.py", line 127, in cb
+    default_generator.manual_seed(seed)
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2025-09-03 12:00:13 [ERROR] server: TTS engine failed to synthesize audio for chunk 1.
+2025-09-03 12:00:45 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 12:00:45 [INFO] server: Using predefined voice: Henry.wav
+2025-09-03 12:00:45 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 12:00:45 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 12:00:45 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 12:00:45 [ERROR] engine: Error during TTS synthesis: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/app/engine.py", line 244, in synthesize
+    set_seed(seed)
+  File "/app/engine.py", line 34, in set_seed
+    torch.manual_seed(seed_value)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_compile.py", line 32, in inner
+    return disable_fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_dynamo/eval_frame.py", line 632, in _fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/random.py", line 46, in manual_seed
+    torch.cuda.manual_seed_all(seed)
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/random.py", line 129, in manual_seed_all
+    _lazy_call(cb, seed_all=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/__init__.py", line 249, in _lazy_call
+    callable()
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/random.py", line 127, in cb
+    default_generator.manual_seed(seed)
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2025-09-03 12:00:45 [ERROR] server: TTS engine failed to synthesize audio for chunk 1.
+2025-09-03 12:01:07 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:01:07 [ERROR] engine: Error during TTS synthesis: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/app/engine.py", line 256, in synthesize
+    wav_tensor = chatterbox_model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 217, in generate
+    self.prepare_conditionals(audio_prompt_path, exaggeration=exaggeration)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/tts.py", line 189, in prepare_conditionals
+    s3gen_ref_dict = self.s3gen.embed_ref(s3gen_ref_wav, S3GEN_SR, device=self.device)
+  File "/usr/local/lib/python3.10/dist-packages/chatterbox/models/s3gen/s3gen.py", line 126, in embed_ref
+    ref_wav = ref_wav.to(device)
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2025-09-03 12:01:07 [ERROR] server: Error in openai_speech_endpoint: 500: TTS engine failed to synthesize audio.
+Traceback (most recent call last):
+  File "/app/server.py", line 942, in openai_speech_endpoint
+    raise HTTPException(
+fastapi.exceptions.HTTPException: 500: TTS engine failed to synthesize audio.
+2025-09-03 12:02:35 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 12:02:35 [INFO] server: Using predefined voice: Henry.wav
+2025-09-03 12:02:35 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 12:02:35 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 12:02:35 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 12:02:35 [ERROR] engine: Error during TTS synthesis: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "/app/engine.py", line 244, in synthesize
+    set_seed(seed)
+  File "/app/engine.py", line 34, in set_seed
+    torch.manual_seed(seed_value)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_compile.py", line 32, in inner
+    return disable_fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_dynamo/eval_frame.py", line 632, in _fn
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/random.py", line 46, in manual_seed
+    torch.cuda.manual_seed_all(seed)
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/random.py", line 129, in manual_seed_all
+    _lazy_call(cb, seed_all=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/__init__.py", line 249, in _lazy_call
+    callable()
+  File "/usr/local/lib/python3.10/dist-packages/torch/cuda/random.py", line 127, in cb
+    default_generator.manual_seed(seed)
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2025-09-03 12:02:35 [ERROR] server: TTS engine failed to synthesize audio for chunk 1.
+2025-09-03 12:03:03 [INFO] server: TTS Server: Application shutdown sequence initiated...
+2025-09-03 12:03:03 [INFO] server: TTS Server: Application shutdown complete.
+2025-09-03 12:03:20 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 12:03:20 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 12:03:20 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 12:03:20 [INFO] server: TTS Server: Initializing application...
+2025-09-03 12:03:20 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 12:03:20 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 12:03:20 [INFO] engine: Final device selection: cuda
+2025-09-03 12:03:20 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 12:03:28 [INFO] root: input frame rate=25
+2025-09-03 12:03:30 [INFO] engine: Successfully loaded TTS model using from_pretrained on cuda (expected from 'ResembleAI/chatterbox' or library default).
+2025-09-03 12:03:30 [INFO] engine: TTS Model loaded successfully on cuda. Engine sample rate: 24000 Hz.
+2025-09-03 12:03:30 [INFO] server: TTS Model loaded successfully via engine.
+2025-09-03 12:03:30 [INFO] server: Application startup sequence complete.
+2025-09-03 12:03:30 [INFO] server: Received /tts request: mode='predefined', format='wav'
+2025-09-03 12:03:30 [INFO] server: Using predefined voice: Henry.wav
+2025-09-03 12:03:30 [INFO] server: Processing text as a single chunk (splitting not enabled or text too short).
+2025-09-03 12:03:30 [INFO] server: Synthesizing chunk 1/1...
+2025-09-03 12:03:30 [INFO] engine: Applying user-provided seed for generation: 3000
+2025-09-03 12:03:30 [INFO] engine: Global seed set to: 3000
+2025-09-03 12:03:32 [INFO] server: Attempting to open web browser to: http://localhost:8004/
+2025-09-03 12:03:39 [INFO] utils: Encoded 691244 bytes to 'wav' at 24000Hz in 0.001 seconds.
+2025-09-03 12:03:39 [INFO] server: Successfully generated audio: tts_output_20250903_120339.wav, 691244 bytes, type audio/wav.
+2025-09-03 12:03:53 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:03:53 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:03:54 [INFO] utils: Encoded 180524 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:03:57 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:03:57 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:03:58 [INFO] utils: Encoded 44204 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:04:14 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:04:14 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:04:15 [INFO] utils: Encoded 53804 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:04:21 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:04:21 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:04:22 [INFO] utils: Encoded 105644 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:04:22 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:04:22 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:04:23 [INFO] utils: Encoded 149804 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:04:49 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:04:49 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:04:50 [INFO] utils: Encoded 186284 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:04:50 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:04:50 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:04:51 [INFO] utils: Encoded 94124 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:05:02 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:05:02 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:05:04 [INFO] utils: Encoded 320684 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:05:11 [INFO] server: TTS Server: Application shutdown sequence initiated...
+2025-09-03 12:05:11 [INFO] server: TTS Server: Application shutdown complete.
+2025-09-03 12:05:17 [INFO] __main__: Starting TTS Server directly on http://0.0.0.0:8004
+2025-09-03 12:05:17 [INFO] __main__: API documentation will be available at http://0.0.0.0:8004/docs
+2025-09-03 12:05:17 [INFO] __main__: Web UI will be available at http://0.0.0.0:8004/
+2025-09-03 12:05:17 [INFO] server: TTS Server: Initializing application...
+2025-09-03 12:05:17 [INFO] server: Configuration loaded. Log file at: /app/logs/tts_server.log
+2025-09-03 12:05:17 [INFO] engine: CUDA requested and functional. Using CUDA.
+2025-09-03 12:05:17 [INFO] engine: Final device selection: cuda
+2025-09-03 12:05:17 [INFO] engine: Attempting to load model directly using from_pretrained (expected from Hugging Face repository: ResembleAI/chatterbox or library default).
+2025-09-03 12:05:25 [INFO] root: input frame rate=25
+2025-09-03 12:05:28 [INFO] engine: Successfully loaded TTS model using from_pretrained on cuda (expected from 'ResembleAI/chatterbox' or library default).
+2025-09-03 12:05:28 [INFO] engine: TTS Model loaded successfully on cuda. Engine sample rate: 24000 Hz.
+2025-09-03 12:05:28 [INFO] server: TTS Model loaded successfully via engine.
+2025-09-03 12:05:28 [INFO] server: Application startup sequence complete.
+2025-09-03 12:05:29 [INFO] server: Attempting to open web browser to: http://localhost:8004/
+2025-09-03 12:05:38 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:05:42 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:05:43 [INFO] utils: Encoded 67244 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:05:50 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:05:50 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:05:53 [INFO] utils: Encoded 316844 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:05:53 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:05:53 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:05:56 [INFO] utils: Encoded 422444 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:05:56 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:05:56 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:05:58 [INFO] utils: Encoded 349484 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:05:58 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:05:58 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:06:00 [INFO] utils: Encoded 332204 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:06:16 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:06:16 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:06:16 [INFO] utils: Encoded 38444 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:06:25 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:06:25 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:06:26 [INFO] utils: Encoded 82604 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:06:26 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:06:26 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:06:27 [INFO] utils: Encoded 163244 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:06:27 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:06:27 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:06:28 [INFO] utils: Encoded 130604 bytes to 'wav' at 24000Hz in 0.000 seconds.
+2025-09-03 12:06:28 [INFO] engine: Using default (potentially random) generation behavior as seed is 0.
+2025-09-03 12:06:28 [WARNING] root: Reference mel length is not equal to 2 * reference token length.
+
+2025-09-03 12:06:29 [INFO] utils: Encoded 61484 bytes to 'wav' at 24000Hz in 0.000 seconds.
