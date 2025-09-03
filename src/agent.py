@@ -19,7 +19,7 @@ from livekit.agents.llm import function_tool
 from livekit.plugins import noise_cancellation, openai, silero
 
 # Import custom plugins
-from .plugins import LocalWhisperSTT, LocalOllamaLLM, LocalCoquiTTS, PluginFactory
+from .plugins import LocalWhisperSTT, LocalOllamaLLM, LocalCoquiTTS, ChatterTTS, ChatterTTSCustom, PluginFactory
 
 logger = logging.getLogger("agent")
 
@@ -92,8 +92,9 @@ async def entrypoint(ctx: JobContext):
         # Alternative using factory: stt=PluginFactory.create_whisper_stt(model_size="base"),
         # Text-to-speech (TTS) is your agent's voice, turning the LLM's text into speech that the user can hear
         # See all providers at https://docs.livekit.io/agents/integrations/tts/
-        tts=LocalCoquiTTS(),
-        # Alternative using factory: tts=PluginFactory.create_coqui_tts(),
+        tts=ChatterTTS(base_url="http://chatter:8004"),  # Using Chatter TTS with OpenAI-compatible API
+        # Alternative: tts=ChatterTTSCustom(base_url="http://chatter:8004", predefined_voice_id="Gianna.wav"),  # Using custom API with advanced features
+        # Old Coqui TTS: tts=LocalCoquiTTS(),
         # VAD and turn detection are used to determine when the user is speaking and when the agent should respond
         # See more at https://docs.livekit.io/agents/build/turns
         vad=ctx.proc.userdata["vad"],

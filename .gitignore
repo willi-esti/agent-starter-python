@@ -12,3 +12,4 @@ KMS
 .ruff_cache
 coqui-tts_models/
 agent-models/
+models/
